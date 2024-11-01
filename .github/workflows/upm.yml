@@ -1,0 +1,19 @@
+name: Update UPM branch
+on:
+  push:
+    branches:
+      - main
+jobs:
+  split-upm:
+    name: Update UPM branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split UPM branch
+        run: |
+          git subtree split -P "$PKG_ROOT" -b upm
+          git push -u origin upm
+        env:
+          PKG_ROOT: 'Packages/com.demonslime.editoressentials'
